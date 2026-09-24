@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#0e0e0c"/>
+<title>DOPE WARS // THE PIPELINE</title>
+<style>
+  :root {
+    --bg:#0e0e0c; --ink:#f3f0e6; --mute:#8a8678; --lime:#c6ff3d;
+    --amber:#ffbf3d; --red:#ff4d4d; --card:#171714; --line:#2a2a24;
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size:13px; line-height:1.35; overflow:hidden; }
+  body { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); }
+  #app { height:100%; display:flex; flex-direction:column; max-width:430px; margin:0 auto; }
+  header { padding:10px 12px 8px; border-bottom:1px solid var(--lime); flex:0 0 auto; }
+  .brand { color:var(--lime); font-weight:700; letter-spacing:.08em; font-size:11px; }
+  .brand span { color:var(--mute); font-weight:400; }
+  .stats { display:grid; grid-template-columns:1fr 1fr; gap:2px 12px; margin-top:8px; font-size:12px; }
+  .stats b { color:var(--lime); font-weight:700; }
+  .stats .hot { color:var(--red); }
+  .stats .warn { color:var(--amber); }
+  #log { flex:1; overflow-y:auto; padding:10px 12px 8px; font-size:12px; }
+  .line { margin:0 0 6px; white-space:pre-wrap; word-break:break-word; }
+  .line.sys { color:var(--mute); }
+  .line.ok { color:var(--lime); }
+  .line.warn { color:var(--amber); }
+  .line.bad { color:var(--red); }
+  .line.evt { color:#9ad4ff; }
+  nav { flex:0 0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+    padding:8px 10px 12px; border-top:1px solid var(--line); background:#121210; }
+  nav button, .panel button, .rowbtn {
+    background:var(--card); color:var(--ink); border:1px solid var(--line);
+    border-radius:6px; min-height:44px; padding:8px 4px; font:700 11px/1 ui-monospace,monospace;
+    letter-spacing:.06em; text-transform:uppercase; }
+  nav button:active, .panel button:active { border-color:var(--lime); color:var(--lime); }
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.72); display:none;
+    align-items:flex-end; justify-content:center; z-index:20; }
+  .overlay.show { display:flex; }
+  .panel { width:100%; max-width:430px; background:#141412; border-top:1px solid var(--lime);
+    padding:14px 12px calc(16px + env(safe-area-inset-bottom)); max-height:78vh; overflow:auto; }
+  .panel h2 { margin:0 0 8px; color:var(--lime); font-size:13px; letter-spacing:.08em; }
+  .panel p { margin:0 0 10px; color:var(--mute); font-size:12px; }
+  .choices { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; }
+  .choices button, .rowbtn { padding:9px 10px; font-size:11px; }
+  .choices button.on { border-color:var(--lime); color:var(--lime); }
+  .row { display:flex; gap:6px; margin-bottom:8px; }
+  .row input { flex:1; background:#0e0e0c; border:1px solid var(--line); color:var(--ink);
+    padding:12px 10px; font-size:16px; font-family:ui-monospace,monospace; border-radius:6px; }
+  .go { width:100%; border-color:var(--lime) !important; color:var(--lime) !important; padding:12px !important; }
+  .ghost { width:100%; margin-top:6px; color:var(--mute) !important; }
+  .bag { display:flex; justify-content:space-between; gap:8px; padding:8px 0;
+    border-bottom:1px solid var(--line); font-size:12px; }
+  .bag b { color:var(--lime); }
+  .inv { color:var(--mute); font-size:11px; margin-bottom:8px; }
+  .cell-line { grid-column:1/-1; color:var(--mute); font-size:11px; letter-spacing:.04em; }
+  .cell-line b { color:var(--lime); }
+  .grid6 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+  .citycard { background:#10100e; border:1px solid var(--line); border-radius:6px; padding:8px; }
+  .citycard h3 { margin:0 0 6px; font-size:10px; letter-spacing:.08em; color:var(--mute); }
+  .node { display:flex; justify-content:space-between; align-items:center; gap:6px;
+    padding:7px 0; border-top:1px solid #222; font-size:11px; }
+  .node:first-of-type { border-top:0; }
+  .dot { width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
+  .chatbox { background:#0e0e0c; border:1px solid var(--line); border-radius:6px;
+    padding:8px; max-height:120px; overflow:auto; font-size:11px; color:var(--mute); margin-bottom:8px; }
+  .chatbox div { margin:0 0 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">DOPE WARS <span>// THE PIPELINE</span></div>
+    <div class="stats" id="stats"></div>
+  </header>
+  <div id="log"></div>
+  <nav id="nav"></nav>
+</div>
+<div class="overlay" id="overlay"><div class="panel" id="panel"></div></div>
+<script src="game.js"></script>
+</body>
+</html>
